@@ -97,12 +97,14 @@ public class GameManagerImpl implements GameManager {
     }
     //Añadir Objeto sobre un usuario
     @Override
-    public int AddUserObject(String id, Object object) {
-        User temp_usr = mapUser.get(id);
-        if(temp_usr != null){
-            int err = temp_usr.setObject(object);
+    public int addUserObject(String userId, String objectId) {
+        User temp_usr = mapUser.get(userId);
+        //From Object Id to Object from the List of Objects
+        Object temp_obj = getObject( objectId);
+        if(temp_usr != null && temp_obj!=null){
+            int err = temp_usr.setObject(temp_obj);
             if(err == 201){
-                log.info("Object added to user " + temp_usr.getName() + " : " + object.getName());
+                log.info("Object added to user " + temp_usr.getName() + " : " + temp_obj.getName());
                 return 201; //OK CREATED
             }
             else if(err == 400){
@@ -115,13 +117,13 @@ public class GameManagerImpl implements GameManager {
             }
         }
         else{
-            log.error("User Not found");
+            log.error("User: "+userId +" &/or Object: " + objectId +" NOT FOUND!");
             return 404; //USER NOT FOUND
         }
     }
     //Añadir Lista de Objetos sobre un usuario
     @Override
-    public int AddUserObjects(String id, List<Object> listObjects){
+    public int addUserObjects(String id, List<Object> listObjects){
         User temp_usr = mapUser.get(id);
         if(temp_usr != null){
             int err = temp_usr.setListObjects(listObjects);
@@ -165,6 +167,22 @@ public class GameManagerImpl implements GameManager {
             this.listObjects.add(this.listObjects.size(), object);
             log.info("201: Object Added: " + object.getName());
             result = 201;//OK CREATED
+        } catch (IllegalArgumentException e) {
+            log.error("400: Bad Object parameters");
+            result = 400;//BAD REQUEST
+        } catch (IndexOutOfBoundsException e) {
+            log.error("507: Insufficient Storage");
+            result = 507;//INSUFFICIENT STORAGE
+        }
+        return result;
+    }
+    @Override
+    public int addObjects(List<Object> listObjects) {
+        int result;
+        try {
+            this.listObjects.addAll(listObjects);
+            log.info("201: Objects Added: " + listObjects.toString());
+            result = 200;//OK Added
         } catch (IllegalArgumentException e) {
             log.error("400: Bad Object parameters");
             result = 400;//BAD REQUEST

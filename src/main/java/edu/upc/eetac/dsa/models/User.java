@@ -10,28 +10,21 @@ public class User {
     private String surname;
     //Game User Objects
     private List<Object> listObjects = null; //List of Objects
-    private int numObjects = 0; //Number of Objects in the list
-
     //Public Constructor to initialize User
     public User(String id, String name, String surname){
         this.name = name;
         this.id = id;
         this.surname = surname;
         this.listObjects = new LinkedList<Object>();
-        numObjects = 0;
     }
     public User(){
         //Empty Constructor Initialization for second cases
         //Objects list of User is always initialized empty
         this.listObjects = new LinkedList<Object>();
-        numObjects = 0;
     }
 
-    public void setNumObjects(int numObjects){
-        this.numObjects = numObjects;
-    }
     public int getNumObjects(){
-        return this.numObjects;
+        return this.listObjects.size();
     }
 
     //Returns an object from the list, else null for Out of bounds or Not initialized

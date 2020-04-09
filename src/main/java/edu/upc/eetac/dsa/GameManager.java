@@ -15,14 +15,16 @@ public interface GameManager {
     //Consultar número de un usuarios que hay en el sistema
     public int numUsers();
     //Consultar los objetos de un usuario (orden de inserción)
-    public int AddUserObject(String id, Object object);
+    public int addUserObject(String id, String objectId);
     //Consultar los objetos de un usuario (orden de inserción)
-    public int AddUserObjects(String id, List<Object> listObjects);
+    public int addUserObjects(String id, List<Object> listObjects);
     //Consultar el número de objetos de un usuario
     public int getNumObjectsUser(String id);
     /*                  Extras                            */
     //Añadir un Objeto
     public int addObject(Object object);
+    //Añadir una lista de Objetos
+    public int addObjects(List<Object> listObjects);
     //Consultar un Objeto
     public Object getObject(String ObjectId);
     //Consultar la lista de Objetos
