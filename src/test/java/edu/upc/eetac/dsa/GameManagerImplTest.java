@@ -24,12 +24,12 @@ public class GameManagerImplTest {
     @Before
     public void setUp() {
         //Configuring Log4j
-        //Configure logger
         BasicConfigurator.configure();
         logger.debug("Debug Test Message!");
         logger.info("Info Test Message");
-        logger.warn("warning  Test Message!");
-        logger.error("error Test Message");
+        logger.warn("Warning Test Message!");
+        logger.error("Error Test Message");
+        //Instancing GameManager Implementation
         manager = GameManagerImpl.getInstance();
        //Initializing Object List
         listObjects =  new LinkedList<Object>();
