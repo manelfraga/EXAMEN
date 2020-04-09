@@ -1,5 +1,5 @@
 # AUTHOR *KRUNAL BADSIWAL* for the course *DSA* 
-###*Minimum 1 exam example implementation*
+### *Minimum 1 exam example implementation*
 La EETAC está interesada en construir un juego que presente el mapa del
 campus PMT donde se pueden ver los edificios, el lago, el parking, la huerta,
 etc. Sobre este mapa, un usuario podrá realizar, además de los movimientos
