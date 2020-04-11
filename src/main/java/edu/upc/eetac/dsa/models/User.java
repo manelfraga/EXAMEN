@@ -9,37 +9,36 @@ public class User {
     private String name;
     private String surname;
     //Game User Objects
-    private List<Object> listObjects = null; //List of Objects
+    private List<GameObject> listGameObjects = null; //List of Objects
     //Public Constructor to initialize User
     public User(String id, String name, String surname){
         this.name = name;
         this.id = id;
         this.surname = surname;
-        this.listObjects = new LinkedList<Object>();
+        this.listGameObjects = new LinkedList<GameObject>();
     }
     public User(){
         //Empty Constructor Initialization for second cases
         //Objects list of User is always initialized empty
-        this.listObjects = new LinkedList<Object>();
     }
 
-    public int getNumObjects(){
-        return this.listObjects.size();
+    public int getNumGameObjects(){
+        return this.listGameObjects.size();
     }
 
     //Returns an object from the list, else null for Out of bounds or Not initialized
-    public Object getObject(int index){
+    public GameObject getGameObject(int index){
         try {
-            return this.listObjects.get(index);
+            return this.listGameObjects.get(index);
         }
         catch (IndexOutOfBoundsException | ExceptionInInitializerError e ){
             return null;
         }
     }
     //Adds Object to the User list
-    public int setObject(Object object){
+    public int setGameObject(GameObject gameObject){
         try{
-            this.listObjects.add(object);
+            this.listGameObjects.add(gameObject);
         }
         catch (ExceptionInInitializerError e)
         {
@@ -51,13 +50,13 @@ public class User {
         return 201;//201 Created
     }
     //Returns User Object List
-    public List<Object> getListObjects(){
-        return this.listObjects;
+    public List<GameObject> getListGameObjects(){
+        return this.listGameObjects;
     }
     //Adds a List of Objects to User
-    public int setListObjects(List<Object> listObjects) {
+    public int setListObjects(List<GameObject> listGameObjects) {
         try{
-            this.listObjects.addAll(listObjects);
+            this.listGameObjects.addAll(listGameObjects);
         }
         catch(NullPointerException e){
             return 204;//204 No Content

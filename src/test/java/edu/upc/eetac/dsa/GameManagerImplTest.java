@@ -1,9 +1,9 @@
 package edu.upc.eetac.dsa;
 import edu.upc.eetac.dsa.models.User;
-import edu.upc.eetac.dsa.models.Object;
-import org.apache.log4j.BasicConfigurator;
+import edu.upc.eetac.dsa.models.GameObject;
 import org.apache.log4j.Logger;
 //Junit 4.13
+import org.apache.log4j.PropertyConfigurator;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -16,31 +16,31 @@ public class GameManagerImplTest {
     //Log4j Logger initialization
     private static Logger logger = Logger.getLogger(GameManagerImplTest.class);
     //GameManager
-    public GameManagerImpl manager = null;
+    public GameManager manager = null;
     //Estructura de datos
     User user;
-    List<Object> listObjects;
+    List<GameObject> listGameObjects;
     //Metodo SetUp
     @Before
     public void setUp() {
         //Configuring Log4j
-        BasicConfigurator.configure();
+        PropertyConfigurator.configure("src/main/resources/log4j.properties");
         logger.debug("Debug Test Message!");
-        logger.info("Info Test Message");
+        logger.info("Info Test Message!");
         logger.warn("Warning Test Message!");
-        logger.error("Error Test Message");
+        logger.error("Error Test Message!");
         //Instancing GameManager Implementation
         manager = GameManagerImpl.getInstance();
        //Initializing Object List
-        listObjects =  new LinkedList<Object>();
+        listGameObjects =  new LinkedList<GameObject>();
         //Initialzing Test User
         user = new User("xyz", "Krunal", "Badsiwal");
         //Appending data to Object List
-        listObjects.add(new Object("001", "Sword"));
-        listObjects.add(new Object("002", "Shield"));
-        listObjects.add(new Object("003", "Potion"));
+        listGameObjects.add(new GameObject("001", "Sword"));
+        listGameObjects.add(new GameObject("002", "Shield"));
+        listGameObjects.add(new GameObject("003", "Potion"));
         //Adding Objects list to Game Manager
-        manager.addObjects(listObjects);
+        manager.addGameObjects(listGameObjects);
     }
     //Tests
     //Metodo Test para añadir un usuario en ek sistema y verificar el número de usuarios
@@ -61,11 +61,11 @@ public class GameManagerImplTest {
         //Setting up with 1 Test User
         manager.addUser(user.getId(),user.getName(),user.getSurname());
         //Test for the objects the test user has equals 0 as setUp method
-        Assert.assertEquals(0, manager.getNumObjectsUser(user.getId()));
+        Assert.assertEquals(0, manager.getNumGameObjectsUser(user.getId()));
         //Adding an object to the User passing a id of the Object, Expects http 201 Ok
-        Assert.assertEquals(201,manager.addUserObject(user.getId(),listObjects.get(0).getId()));
+        Assert.assertEquals(201,manager.addUserGameObject(user.getId(), listGameObjects.get(0).getId()));
         //Test if the number of objects inside Test User has increased to 1
-        Assert.assertEquals(1, manager.getNumObjectsUser(user.getId()));
+        Assert.assertEquals(1, manager.getNumGameObjectsUser(user.getId()));
     }
 
     //Metodo Teardown

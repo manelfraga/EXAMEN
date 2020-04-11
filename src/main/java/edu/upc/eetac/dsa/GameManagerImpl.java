@@ -1,23 +1,25 @@
 package edu.upc.eetac.dsa;
+import edu.upc.eetac.dsa.models.GameObject;
 import edu.upc.eetac.dsa.models.User;
-import edu.upc.eetac.dsa.models.Object;
 import org.apache.log4j.Logger;
 
+import java.nio.charset.Charset;
 import java.util.*;
 
 public class GameManagerImpl implements GameManager {
-    private static GameManagerImpl instance;
+
+    private static GameManager instance;
     private HashMap<String , User> mapUser;
-    private List<Object> listObjects;
+    private List<GameObject> listGameObjects;
     private static Logger log = Logger.getLogger(GameManagerImpl.class);
     //Private Constructor
     private GameManagerImpl(){
         //Singleton Private Constructor
-        this.mapUser = new HashMap<>();
-        this.listObjects = new LinkedList<>();
+        this.mapUser = new HashMap<String, User>();
+        this.listGameObjects = new LinkedList<GameObject>();
     }
     //Singleton implementation for the instance of the GameManager
-    public static GameManagerImpl getInstance(){
+    public static GameManager getInstance(){
         if(instance == null) {
             instance = new GameManagerImpl();
         }
@@ -93,18 +95,19 @@ public class GameManagerImpl implements GameManager {
     //Consultar numeros de usuarios que hay en el sistema
     @Override
     public int numUsers() {
-        return this.mapUser.size();
+        int result =this.mapUser.size();
+        return result;
     }
     //Añadir Objeto sobre un usuario
     @Override
-    public int addUserObject(String userId, String objectId) {
+    public int addUserGameObject(String userId, String gameobjectId) {
         User temp_usr = mapUser.get(userId);
         //From Object Id to Object from the List of Objects
-        Object temp_obj = getObject( objectId);
-        if(temp_usr != null && temp_obj!=null){
-            int err = temp_usr.setObject(temp_obj);
+        GameObject temp_gameobj = getGameObject( gameobjectId);
+        if(temp_usr != null && temp_gameobj!=null){
+            int err = temp_usr.setGameObject(temp_gameobj);
             if(err == 201){
-                log.info("Object added to user " + temp_usr.getName() + " : " + temp_obj.getName());
+                log.info("Object added to user " + temp_usr.getName() + " : " + temp_gameobj.getName());
                 return 201; //OK CREATED
             }
             else if(err == 400){
@@ -117,16 +120,16 @@ public class GameManagerImpl implements GameManager {
             }
         }
         else{
-            log.error("User: "+userId +" &/or Object: " + objectId +" NOT FOUND!");
+            log.error("User: "+userId +" &/or Object: " + gameobjectId +" NOT FOUND!");
             return 404; //USER NOT FOUND
         }
     }
     //Añadir Lista de Objetos sobre un usuario
     @Override
-    public int addUserObjects(String id, List<Object> listObjects){
+    public int addUserGameObjects(String id, List<GameObject> listGameObjects){
         User temp_usr = mapUser.get(id);
         if(temp_usr != null){
-            int err = temp_usr.setListObjects(listObjects);
+            int err = temp_usr.setListObjects(listGameObjects);
             if(err == 201){
                 log.info("201: Object List added to user " + temp_usr.getName());
                 return 201; //OK CREATED
@@ -136,7 +139,7 @@ public class GameManagerImpl implements GameManager {
                 return 400; //BAD REQUEST
             }
             else{
-                log.error("204: No Objects Content: "+ temp_usr.getName());
+                log.error("204: No Object Content: "+ temp_usr.getName());
                 return 204; //204 No Content
             }
         }
@@ -147,11 +150,11 @@ public class GameManagerImpl implements GameManager {
     }
     //Consultar el número de objetos de un sistema
     @Override
-    public int getNumObjectsUser(String id) {
+    public int getNumGameObjectsUser(String id) {
         User temp_usr = mapUser.get(id);
         if(temp_usr != null){
-            log.info("User: "+temp_usr.getName() + " has NumObjects: "+temp_usr.getNumObjects());
-            return temp_usr.getNumObjects();
+            log.info("User: "+temp_usr.getName() + " has NumObjects: "+temp_usr.getNumGameObjects());
+            return temp_usr.getNumGameObjects();
         }
         else{
             log.error("User Not found");
@@ -161,11 +164,11 @@ public class GameManagerImpl implements GameManager {
 
     /*                          EXTRAS                  */
     @Override
-    public int addObject(Object object) {
+    public int addGameObject(GameObject gameObject) {
         int result;
         try {
-            this.listObjects.add(this.listObjects.size(), object);
-            log.info("201: Object Added: " + object.getName());
+            this.listGameObjects.add(gameObject);
+            log.info("201: Object Added: " + gameObject.getName());
             result = 201;//OK CREATED
         } catch (IllegalArgumentException e) {
             log.error("400: Bad Object parameters");
@@ -177,11 +180,11 @@ public class GameManagerImpl implements GameManager {
         return result;
     }
     @Override
-    public int addObjects(List<Object> listObjects) {
+    public int addGameObjects(List<GameObject> listGameObjects) {
         int result;
         try {
-            this.listObjects.addAll(listObjects);
-            log.info("201: Objects Added: " + listObjects.toString());
+            this.listGameObjects.addAll(listGameObjects);
+            log.info("201: Objects Added: " + listGameObjects.toString());
             result = 200;//OK Added
         } catch (IllegalArgumentException e) {
             log.error("400: Bad Object parameters");
@@ -193,34 +196,47 @@ public class GameManagerImpl implements GameManager {
         return result;
     }
     @Override
-    public Object getObject(String objectId) {
-        Object result_object = null;
+    public GameObject getGameObject(String gameObjectId) {
+        GameObject result_Game_object = null;
         try{
-            for(Object object : this.listObjects){
-                if (object.getId().compareTo(objectId) == 0){
-                    result_object = object;
-                    log.info("302: Object found: " + object.getName());
+            for(GameObject gameObject : this.listGameObjects){
+                if (gameObject.getId().compareTo(gameObjectId) == 0){
+                    result_Game_object = gameObject;
+                    log.info("302: Object found: " + gameObject.getName());
                 }
             }
         }catch(ExceptionInInitializerError e){
             log.error("400: Object list not initialized");
             return null; //400 ERROR List of Objects not initialized
         }
-        return result_object;
+        return result_Game_object;
     }
     @Override
     public List<User> getUsersList() {
         List<User> result = null;
-        if(this.mapUser != null){
+        if(this.mapUser.size() !=0){
             result = new LinkedList<>(this.mapUser.values());
+            log.info("User List: "+result.toString());
         }
         return result; //Null: 404 Empty User HashMap
     }
-
+    //Generate Id
+    @Override
+    public String generateId(){
+        String SALTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+        StringBuilder salt = new StringBuilder();
+        Random rnd = new Random();
+        while (salt.length() < 3) { // length of the random generated ID
+            int index = (int) (rnd.nextFloat() * SALTCHARS.length());
+            salt.append(SALTCHARS.charAt(index));
+        }
+        String generatedString = salt.toString();
+        return generatedString;
+    }
     //Liberar Recursos
     @Override
     public void liberateReserves() {
-        this.listObjects.clear();
+        this.listGameObjects.clear();
         this.mapUser.clear();
     }
 }

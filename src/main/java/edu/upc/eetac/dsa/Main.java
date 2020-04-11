@@ -1,13 +1,13 @@
 package edu.upc.eetac.dsa;
-import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 // REST AND SWAGGER
 import io.swagger.jaxrs.config.BeanConfig;
-import io.swagger.jersey.listing.ApiListingResourceJSON;
+import org.apache.log4j.PropertyConfigurator;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.grizzly.http.server.StaticHttpHandler;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
+
 import java.io.IOException;
 import java.net.URI;
 
@@ -31,7 +31,7 @@ public class Main {
 
         beanConfig.setHost("localhost:8080");
         beanConfig.setBasePath("/minimo1");
-        beanConfig.setContact("support@example.com");
+        beanConfig.setContact("krunalmriacle@gmail.com");
         beanConfig.setDescription("REST API for Game Manager");
         beanConfig.setLicenseUrl("http://www.apache.org/licenses/LICENSE-2.0.html");
         beanConfig.setResourcePackage("edu.upc.eetac.dsa.services");
@@ -52,16 +52,17 @@ public class Main {
      */
     public static void main(String[] args) throws IOException {
         //Log4j initialization with proper configuration
-        BasicConfigurator.configure();
+        //PropertiesConfigurator is used to configure logger from properties file
+        //Configuring Log4j, location of the log4j.properties file and must always be inside the src folder
+        PropertyConfigurator.configure("src/main/resources/log4j.properties");
         logger.debug("Debug Test Message!");
-        logger.info("Info Test Message");
+        logger.info("Info Test Message!");
         logger.warn("Warning Test Message!");
-        logger.error("Error Test Message");
-        // Code from here!
+        logger.error("Error Test Message!");
+        // Server Initialization Code
         final HttpServer server = startServer();
         StaticHttpHandler staticHttpHandler = new StaticHttpHandler("./public/");
         server.getServerConfiguration().addHttpHandler(staticHttpHandler, "/");
-
 
         // System.out.println(String.format("Jersey app started with WADL available at "
         //   + "%s application.wadl\nHit enter to stop it...", BASE_URI));
