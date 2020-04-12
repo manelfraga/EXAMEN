@@ -15,7 +15,7 @@ public class User {
         this.name = name;
         this.id = id;
         this.surname = surname;
-        this.listGameObjects = new LinkedList<GameObject>();
+        this.listGameObjects = new LinkedList<>();
     }
     public User(){
         //Empty Constructor Initialization for second cases
@@ -53,8 +53,12 @@ public class User {
     public List<GameObject> getListGameObjects(){
         return this.listGameObjects;
     }
+    //Setter for Swagger API,DON'T USE IN MAIN CODE!
+    public void setListObjects(List<GameObject> listGameObjects) {
+            this.listGameObjects = (listGameObjects);
+    }
     //Adds a List of Objects to User
-    public int setListObjects(List<GameObject> listGameObjects) {
+    public int setListObjects_resCode(List<GameObject> listGameObjects) {
         try{
             this.listGameObjects.addAll(listGameObjects);
         }

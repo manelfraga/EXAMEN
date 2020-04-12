@@ -1,9 +1,9 @@
 package edu.upc.eetac.dsa;
+
 import edu.upc.eetac.dsa.models.GameObject;
 import edu.upc.eetac.dsa.models.User;
 import org.apache.log4j.Logger;
 
-import java.nio.charset.Charset;
 import java.util.*;
 
 public class GameManagerImpl implements GameManager {
@@ -15,8 +15,8 @@ public class GameManagerImpl implements GameManager {
     //Private Constructor
     private GameManagerImpl(){
         //Singleton Private Constructor
-        this.mapUser = new HashMap<String, User>();
-        this.listGameObjects = new LinkedList<GameObject>();
+        this.mapUser = new HashMap<>();
+        this.listGameObjects = new LinkedList<>();
     }
     //Singleton implementation for the instance of the GameManager
     public static GameManager getInstance(){
@@ -30,7 +30,7 @@ public class GameManagerImpl implements GameManager {
     public List<User> getSortedUsersAlphabetical() {
         //Map of Users is not empty
         if(this.mapUser != null) {
-            List<User> result = new LinkedList<User>(mapUser.values());
+            List<User> result = new LinkedList<>(mapUser.values());
 
             Collections.sort(result, new Comparator<User>() {
                 @Override
@@ -95,8 +95,7 @@ public class GameManagerImpl implements GameManager {
     //Consultar numeros de usuarios que hay en el sistema
     @Override
     public int numUsers() {
-        int result =this.mapUser.size();
-        return result;
+        return this.mapUser.size();
     }
     //Añadir Objeto sobre un usuario
     @Override
@@ -129,7 +128,7 @@ public class GameManagerImpl implements GameManager {
     public int addUserGameObjects(String id, List<GameObject> listGameObjects){
         User temp_usr = mapUser.get(id);
         if(temp_usr != null){
-            int err = temp_usr.setListObjects(listGameObjects);
+            int err = temp_usr.setListObjects_resCode(listGameObjects);
             if(err == 201){
                 log.info("201: Object List added to user " + temp_usr.getName());
                 return 201; //OK CREATED
@@ -230,8 +229,7 @@ public class GameManagerImpl implements GameManager {
             int index = (int) (rnd.nextFloat() * SALTCHARS.length());
             salt.append(SALTCHARS.charAt(index));
         }
-        String generatedString = salt.toString();
-        return generatedString;
+        return salt.toString();
     }
     //Liberar Recursos
     @Override

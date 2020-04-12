@@ -8,7 +8,7 @@ public class GameObject {
         this.name = name;
         this.id = id;
     }
-    //Models must always contain empty constructor and setter and getters for API Rest!
+    //Models must always contain empty constructor and setter and getters for API Rest Magic!
     public GameObject(){
     }
     public void setName(String name){this.name =name;}

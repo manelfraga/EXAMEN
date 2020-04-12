@@ -1,7 +1,7 @@
 package edu.upc.eetac.dsa;
-import org.apache.log4j.Logger;
-// REST AND SWAGGER
+
 import io.swagger.jaxrs.config.BeanConfig;
+import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.grizzly.http.server.StaticHttpHandler;
@@ -10,6 +10,8 @@ import org.glassfish.jersey.server.ResourceConfig;
 
 import java.io.IOException;
 import java.net.URI;
+
+// REST AND SWAGGER
 
 public class Main {
     static final Logger logger = Logger.getLogger(Main.class);
@@ -31,7 +33,7 @@ public class Main {
 
         beanConfig.setHost("localhost:8080");
         beanConfig.setBasePath("/minimo1");
-        beanConfig.setContact("krunalmriacle@gmail.com");
+        beanConfig.setContact("krunalmiracle@gmail.com");
         beanConfig.setDescription("REST API for Game Manager");
         beanConfig.setLicenseUrl("http://www.apache.org/licenses/LICENSE-2.0.html");
         beanConfig.setResourcePackage("edu.upc.eetac.dsa.services");
@@ -69,7 +71,7 @@ public class Main {
         //Formatting BASE_URI FOR SWAGGER
         String swagger_uri = BASE_URI;
         String target = "minimo1";
-        String replacement = "swagger";
+        String replacement = "swagger3";
         swagger_uri = swagger_uri.replace(target, replacement);
         System.out.println(String.format("RestApi Started at " + "%s\nHit enter to stop it...", swagger_uri));
         System.in.read();
