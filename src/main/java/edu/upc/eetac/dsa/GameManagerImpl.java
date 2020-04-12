@@ -128,7 +128,7 @@ public class GameManagerImpl implements GameManager {
     public int addUserGameObjects(String id, List<GameObject> listGameObjects){
         User temp_usr = mapUser.get(id);
         if(temp_usr != null){
-            int err = temp_usr.setListObjects_resCode(listGameObjects);
+            int err = temp_usr.setListGameObjects_resCode(listGameObjects);
             if(err == 201){
                 log.info("201: Object List added to user " + temp_usr.getName());
                 return 201; //OK CREATED

@@ -54,11 +54,11 @@ public class User {
         return this.listGameObjects;
     }
     //Setter for Swagger API,DON'T USE IN MAIN CODE!
-    public void setListObjects(List<GameObject> listGameObjects) {
+    public void setListGameObjects(List<GameObject> listGameObjects) {
             this.listGameObjects = (listGameObjects);
     }
     //Adds a List of Objects to User
-    public int setListObjects_resCode(List<GameObject> listGameObjects) {
+    public int setListGameObjects_resCode(List<GameObject> listGameObjects) {
         try{
             this.listGameObjects.addAll(listGameObjects);
         }
