@@ -1,15 +1,16 @@
 package edu.upc.eetac.dsa.models;
 
-public class GameObject {
+public class covid19Object {
+
     private  String name;
     private  String id;
     //Can contain multiple constructors to initialize itself
-    public GameObject(String id, String name){
+    public covid19Object (String id, String name){
         this.name = name;
         this.id = id;
     }
     //Models must always contain empty constructor and setter and getters for API Rest Magic!
-    public GameObject(){
+    public covid19Object(){
     }
     public void setName(String name){this.name =name;}
     public void setId(String id){this.id =id;}
@@ -22,3 +23,4 @@ public class GameObject {
         return "ID: " + this.getId() + " | Name: " + this.getName() ;
     }
 }
+

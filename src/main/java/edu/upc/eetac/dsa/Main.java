@@ -33,7 +33,7 @@ public class Main {
 
         beanConfig.setHost("localhost:8080");
         beanConfig.setBasePath("/minimo1");
-        beanConfig.setContact("krunalmiracle@gmail.com");
+        beanConfig.setContact("manelfraga@gmail.com");
         beanConfig.setDescription("REST API for Game Manager");
         beanConfig.setLicenseUrl("http://www.apache.org/licenses/LICENSE-2.0.html");
         beanConfig.setResourcePackage("edu.upc.eetac.dsa.services");
@@ -71,7 +71,7 @@ public class Main {
         //Formatting BASE_URI FOR SWAGGER
         String swagger_uri = BASE_URI;
         String target = "minimo1";
-        String replacement = "swagger3";
+        String replacement = "swagger2";
         swagger_uri = swagger_uri.replace(target, replacement);
         System.out.println(String.format("RestApi Started at " + "%s\nHit enter to stop it...", swagger_uri));
         System.in.read();
